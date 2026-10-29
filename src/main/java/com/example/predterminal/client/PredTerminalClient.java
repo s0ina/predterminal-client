@@ -2,6 +2,7 @@ package com.example.predterminal.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import com.example.predterminal.model.WhaleTradesResponse;
 
 @Component
 public class PredTerminalClient {
@@ -14,11 +15,11 @@ public class PredTerminalClient {
                 .build();
     }
 
-    public String getWhaleTrades() {
+    public WhaleTradesResponse getWhaleTrades() {
         return restClient
                 .get()
                 .uri("/prediction-whales?limit=1")
                 .retrieve()
-                .body(String.class);
+                .body(WhaleTradesResponse.class);
     }
 }
