@@ -4,6 +4,7 @@ import com.example.predterminal.client.PredTerminalClient;
 import com.example.predterminal.model.WhaleTradesResponse;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class PredTerminalClientTest {
 
     @Test
     void shouldFetchWhaleTrades() {
-        WhaleTradesResponse response = client.getWhaleTrades(5);
+        WhaleTradesResponse response = client.getWhaleTrades(200);
         
         assertNotNull(response);
         assertTrue(response.isSuccess());
@@ -37,6 +38,13 @@ class PredTerminalClientTest {
             System.out.println("Whale trades found: "
                     + response.getWhales().size());
         }
+    }
+    
+    @Test
+    void shouldRejectInvalidLimit() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            client.getWhaleTrades(0);
+        });
     }
     
 }
