@@ -18,7 +18,7 @@ class PredTerminalClientTest {
 
     @Test
     void shouldFetchWhaleTrades() {
-        WhaleTradesResponse response = client.getWhaleTrades();
+        WhaleTradesResponse response = client.getWhaleTrades(5);
         
         assertNotNull(response);
         assertTrue(response.isSuccess());
@@ -30,5 +30,13 @@ class PredTerminalClientTest {
         System.out.println("Timestamp: " + response.getTimestamp());
         System.out.println("Whales list: " + response.getWhales());
         System.out.println("Whales list size: " + response.getWhales().size());
+        
+        if (response.getWhales().isEmpty()) {
+            System.out.println("No whale trades found.");
+        } else {
+            System.out.println("Whale trades found: "
+                    + response.getWhales().size());
+        }
     }
+    
 }

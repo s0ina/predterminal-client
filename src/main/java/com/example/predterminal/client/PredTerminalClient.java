@@ -15,10 +15,13 @@ public class PredTerminalClient {
                 .build();
     }
 
-    public WhaleTradesResponse getWhaleTrades() {
-        return restClient
+    public WhaleTradesResponse getWhaleTrades(int limit) {
+    	return restClient
                 .get()
-                .uri("/prediction-whales?limit=1")
+                .uri(uriBuilder -> uriBuilder
+                        .path("/prediction-whales")
+                        .queryParam("limit", limit)
+                        .build())
                 .retrieve()
                 .body(WhaleTradesResponse.class);
     }
