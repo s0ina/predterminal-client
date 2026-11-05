@@ -1,12 +1,11 @@
 package com.example.predterminal.model;
 
 import java.util.List;
-import tools.jackson.databind.JsonNode;
 
 public class WhaleTradesResponse {
 
     private boolean success;
-    private List<JsonNode> whales;
+    private List<WhaleTrade> whales;
     private int count;
     boolean isPro;
     private String timestamp;
@@ -19,11 +18,11 @@ public class WhaleTradesResponse {
         this.success = success;
     }
 
-    public List<JsonNode> getWhales() {
+    public List<WhaleTrade> getWhales() {
         return whales;
     }
 
-    public void setWhales(List<JsonNode> whales) {
+    public void setWhales(List<WhaleTrade> whales) {
         this.whales = whales;
     }
 

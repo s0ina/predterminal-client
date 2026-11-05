@@ -3,6 +3,7 @@ package com.example.predterminal;
 import com.example.predterminal.client.PredTerminalClient;
 import com.example.predterminal.model.WhaleTradesResponse;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.example.predterminal.model.WhaleTrade;
 
 @SpringBootTest
 class PredTerminalClientTest {
@@ -19,7 +21,7 @@ class PredTerminalClientTest {
 
     @Test
     void shouldFetchWhaleTrades() {
-        WhaleTradesResponse response = client.getWhaleTrades(200);
+        WhaleTradesResponse response = client.getWhaleTrades(100);
         
         assertNotNull(response);
         assertTrue(response.isSuccess());
@@ -45,6 +47,20 @@ class PredTerminalClientTest {
         assertThrows(IllegalArgumentException.class, () -> {
             client.getWhaleTrades(0);
         });
+    }
+    
+    @Test
+    void shouldCreateWhaleTrade() {
+
+        WhaleTrade trade = new WhaleTrade();
+
+        trade.setMarket("BTC");
+        trade.setAmount(15000);
+        trade.setPrice(67500);
+
+        assertEquals("BTC", trade.getMarket());
+        assertEquals(15000, trade.getAmount());
+        assertEquals(67500, trade.getPrice());
     }
     
 }
