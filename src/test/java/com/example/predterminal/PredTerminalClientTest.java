@@ -3,6 +3,9 @@ package com.example.predterminal;
 import com.example.predterminal.client.PredTerminalClient;
 import com.example.predterminal.model.WhaleTradesResponse;
 
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,6 +21,9 @@ class PredTerminalClientTest {
 
     @Autowired
     private PredTerminalClient client;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     void shouldFetchWhaleTrades() {
@@ -61,6 +67,29 @@ class PredTerminalClientTest {
         assertEquals("BTC", trade.getMarket());
         assertEquals(15000, trade.getAmount());
         assertEquals(67500, trade.getPrice());
+    }
+    
+    @Test
+    void shouldConvertJsonToWhaleTrade() throws JacksonException {
+
+        String json = """
+                {
+                    "market": "BTC",
+                    "amount": 15000,
+                    "price": 67500
+                }
+                """;
+
+        WhaleTrade trade = objectMapper.readValue(json, WhaleTrade.class);
+
+        assertEquals("BTC", trade.getMarket());
+        assertEquals(15000, trade.getAmount());
+        assertEquals(67500, trade.getPrice());
+    }
+    
+    @Test
+    void shouldInjectPredTerminalClient() {
+        assertNotNull(client);
     }
     
 }
